@@ -1,5 +1,14 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
 
+:root {
+  --primary: #8ed7ed;
+  --important: #ff6b6b;
+  --start: linear-gradient(90deg, #ff85e4 0%, #229efd 179.25%);
+  --progress: linear-gradient(90deg, #209cff 0%, #68e0cf 100%);
+  --done: linear-gradient(90deg, #84fab0 0%, #8fd3f4 100%);
+  --shadow: 4px 4px 9px rgba(198, 198, 198, 0.36);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -8,68 +17,161 @@ body {
   font-family: "Roboto", sans-serif;
   background-color: #e5e5e5;
   display: flex;
-  padding-top: 5rem;
+  padding-top: 2rem;
   justify-content: center;
-  overflow: hidden;
   margin: 0;
+  min-height: 100vh;
+}
+
+.container {
+  width: 100%;
+  max-width: 800px;
+  padding: 0 15px;
+}
+
+.controls {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  background: var(--primary);
+  border: none;
+  border-radius: 20px;
+  padding: 0.8rem 1.5rem;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+#search {
+  flex-grow: 1;
+  min-width: 200px;
+  border: 2px solid #eee;
+  border-radius: 20px;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  box-shadow: var(--shadow);
 }
 
 .row {
   display: flex;
-  width: 600px;
   justify-content: space-between;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  gap: 15px;
 }
 
 .col-header {
-  width: 150px;
-  box-shadow: 4px 4px 9px rgba(198, 198, 198, 0.36);
+  flex: 1;
+  box-shadow: var(--shadow);
   border-radius: 20px;
-  padding: 0.8rem 1rem;
-  color: #fff;
+  padding: 1rem;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  min-width: 0;
+}
+
+.placeholder {
+  flex: 1;
+  min-height: 150px;
+  background: #f9f9f9;
+  border-radius: 20px;
+  padding: 1rem;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.placeholder:empty::before {
+  content: "Перетащите сюда";
+  color: #aaa;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: 1rem;
 }
 
 .item {
-  width: 150px;
-  height: 66px;
   border: 1px solid #eee;
-  box-shadow: 4px 4px 9px rgba(198, 198, 198, 0.36);
+  box-shadow: var(--shadow);
   border-radius: 20px;
-  background: #f7f6f7;
-  padding: 0.8rem 1rem;
-  color: #828282;
-  text-align: center;
+  background: white;
+  padding: 1rem;
+  color: #333;
   cursor: grab;
+  transition: all 0.3s ease;
+  position: relative;
+  word-break: break-word;
+}
+
+.item.important::after {
+  content: "!";
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  color: var(--important);
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 
 .item:active {
   cursor: grabbing;
 }
 
-.placeholder {
-  width: 150px;
-  height: 66px;
-}
-
 .start {
-  background: linear-gradient(90deg, #ff85e4 0%, #229efd 179.25%);
+  background: var(--start);
 }
 
 .progress {
-  background: linear-gradient(90deg, #209cff 0%, #68e0cf 100%);
+  background: var(--progress);
 }
 
 .done {
-  background: linear-gradient(90deg, #84fab0 0%, #8fd3f4 100%);
-}
-.hold {
-  border: 5px solid #eee;
+  background: var(--done);
 }
 
-.hide{
-  display: none;
+/* Стили для перетаскивания */
+.hold {
+  border: 3px dashed var(--primary);
+  background: #f0f8ff;
+  transform: scale(0.98);
+  opacity: 0.8;
 }
 
 .hovered {
-  border-top: 2px solid #8ed7ed;
+  background: rgba(142, 215, 237, 0.2);
+  transform: scale(1.01);
+}
+
+.hide {
+  opacity: 0.3;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .row {
+    flex-direction: column;
+  }
+  
+  .col-header, .placeholder {
+    width: 100%;
+  }
+  
+  .controls {
+    flex-direction: column;
+  }
+  
+  #search {
+    width: 100%;
+  }
 }
